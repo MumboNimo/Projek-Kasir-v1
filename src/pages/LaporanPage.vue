@@ -1,50 +1,19 @@
 <script setup>
-import { computed } from "vue";
+import { onMounted } from "vue";
 
 import StatCard from "../components/StatCard.vue";
 import StatusBadge from "../components/StatusBadge.vue";
 
-import {
-  transaksi,
-  formatRupiah,
-  getAllTrx,
-  getTotalPendapatan,
-} from "../data/transaksi.js";
+import { useReports } from "../composables/useReports.js";
+import { useTransactions } from "../composables/useTransactions.js";
+import { formatRupiah } from "../utils/format.js";
 
-const totalPendapatan = computed(() => getTotalPendapatan());
+const { summary, byPayment, loading: loadingReports, fetchAll } = useReports();
+const { transactions, loading: loadingTrx, fetchTransactions } = useTransactions();
 
-const jumlahLunas = computed(
-  () => transaksi.filter((t) => t.status === "Lunas").length,
-);
-
-const jumlahPending = computed(
-  () => transaksi.filter((t) => t.status === "Pending").length,
-);
-
-// Rata-rata nilai transaksi yang lunas
-const rataRata = computed(() => {
-  const lunas = transaksi.filter((t) => t.status === "Lunas");
-  if (lunas.length === 0) return 0;
-  return lunas.reduce((s, t) => s + t.total, 0) / lunas.length;
-});
-
-// Hanya hitung dari transaksi Lunas
-const rekapMetode = computed(() => {
-  const map = {};
-
-  transaksi
-    .filter((t) => t.status === "Lunas")
-    .forEach((t) => {
-      if (!map[t.metodeBayar]) {
-        map[t.metodeBayar] = { metode: t.metodeBayar, jumlah: 0, total: 0 };
-      }
-      map[t.metodeBayar].jumlah++;
-      map[t.metodeBayar].total += t.total;
-    });
-
-  // Object.values() = ambil semua value dari object map
-  // sort descending berdasarkan total
-  return Object.values(map).sort((a, b) => b.total - a.total);
+onMounted(() => {
+  fetchAll();
+  fetchTransactions();
 });
 </script>
 
@@ -62,25 +31,25 @@ const rekapMetode = computed(() => {
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       <StatCard
         title="Total Pendapatan"
-        :value="formatRupiah(totalPendapatan)"
+        :value="summary ? formatRupiah(summary.totalPendapatan) : '—'"
         icon="💰"
         trend="dari transaksi Lunas"
       />
       <StatCard
         title="Transaksi Lunas"
-        :value="jumlahLunas.toString()"
+        :value="summary ? summary.jumlahLunas.toString() : '—'"
         icon="✅"
-        :trend="`dari ${transaksi.length} total`"
+        :trend="summary ? `dari ${summary.totalTransaksi} total` : ''"
       />
       <StatCard
         title="Transaksi Pending"
-        :value="jumlahPending.toString()"
+        :value="summary ? summary.jumlahPending.toString() : '—'"
         icon="⏳"
         trend="menunggu pembayaran"
       />
       <StatCard
         title="Rata-rata Nilai"
-        :value="formatRupiah(Math.round(rataRata))"
+        :value="summary ? formatRupiah(summary.rataRata) : '—'"
         icon="📈"
         trend="per transaksi lunas"
       />
@@ -111,12 +80,12 @@ const rekapMetode = computed(() => {
           </thead>
           <tbody>
             <tr
-              v-for="rekap in rekapMetode"
-              :key="rekap.metode"
+              v-for="rekap in byPayment"
+              :key="rekap.metodeBayar"
               class="border-b border-sage-100 hover:bg-sage-50 transition-colors"
             >
               <td class="px-4 py-3 font-semibold text-charcoal">
-                {{ rekap.metode }}
+                {{ rekap.metodeBayar }}
               </td>
               <td class="px-4 py-3 text-charcoal-muted">
                 {{ rekap.jumlah }} transaksi
@@ -137,13 +106,14 @@ const rekapMetode = computed(() => {
       <div class="px-5 py-4 border-b border-sage-100">
         <h3 class="font-semibold text-charcoal">Riwayat Semua Transaksi</h3>
       </div>
-      <div class="overflow-x-auto">
+      <div v-if="loadingTrx" class="py-8 text-center text-sm text-charcoal-muted">Memuat...</div>
+      <div v-else class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
             <tr
               class="bg-sage-50 text-xs font-semibold uppercase text-charcoal-muted"
             >
-              <th class="px-4 py-3 text-left">ID</th>
+              <th class="px-4 py-3 text-left">Kode</th>
               <th class="px-4 py-3 text-left">Tanggal</th>
               <th class="px-4 py-3 text-left">Metode</th>
               <th class="px-4 py-3 text-left">Total</th>
@@ -152,11 +122,11 @@ const rekapMetode = computed(() => {
           </thead>
           <tbody>
             <tr
-              v-for="trx in getAllTrx()"
+              v-for="trx in transactions"
               :key="trx.id"
               class="border-b border-sage-100 hover:bg-sage-50 transition-colors"
             >
-              <td class="px-4 py-3 font-medium text-sage-600">{{ trx.id }}</td>
+              <td class="px-4 py-3 font-medium text-sage-600">{{ trx.kode }}</td>
               <td class="px-4 py-3 text-charcoal-muted">
                 {{ trx.tanggal }} · {{ trx.jam }}
               </td>

@@ -1,13 +1,23 @@
 <script setup>
 import { computed } from "vue";
-import { currentPage, menuItems } from "../composables/useNavigation.js";
+import { useRoute } from "vue-router";
+import { useAuth } from "../composables/useAuth.js";
 
-// Cari item menu yang id-nya cocok dengan halaman aktif
-const halamanAktif = computed(() =>
-  menuItems.find((m) => m.id === currentPage.value),
-);
+const route = useRoute();
+const { user } = useAuth();
 
-// Tanggal hari ini dalam format Indonesia lengkap
+const menuMeta = {
+  beranda:   { nama: "Beranda",           ikon: "🏠" },
+  kasir:     { nama: "Kasir",             ikon: "🛒" },
+  transaksi: { nama: "Transaksi",         ikon: "🧾" },
+  inventori: { nama: "Inventori",         ikon: "📦" },
+  laporan:   { nama: "Laporan",           ikon: "📊" },
+  produk:    { nama: "Manajemen Produk",  ikon: "🗂️" },
+  pengguna:  { nama: "Manajemen Pengguna",ikon: "👤" },
+};
+
+const halamanAktif = computed(() => menuMeta[route.name] ?? { nama: "", ikon: "" });
+
 const tanggalHariIni = new Date().toLocaleDateString("id-ID", {
   weekday: "long",
   day: "numeric",
@@ -23,16 +33,16 @@ const tanggalHariIni = new Date().toLocaleDateString("id-ID", {
     <!-- Kiri: nama halaman + tanggal -->
     <div>
       <h2 class="text-base font-semibold text-charcoal flex items-center gap-2">
-        <span>{{ halamanAktif?.ikon }}</span>
-        <span>{{ halamanAktif?.nama }}</span>
+        <span>{{ halamanAktif.ikon }}</span>
+        <span>{{ halamanAktif.nama }}</span>
       </h2>
       <p class="text-xs text-charcoal-muted mt-0.5">{{ tanggalHariIni }}</p>
     </div>
 
-    <!-- Kanan: info toko -->
+    <!-- Kanan: info user -->
     <div class="text-right">
-      <p class="text-sm font-semibold text-sage-600">Toko Segar Jaya</p>
-      <p class="text-xs text-charcoal-muted">Sidoarjo, Jawa Timur</p>
+      <p class="text-sm font-semibold text-sage-600">{{ user?.name ?? 'KasirKu' }}</p>
+      <p class="text-xs text-charcoal-muted capitalize">{{ user?.role ?? '' }}</p>
     </div>
   </header>
 </template>

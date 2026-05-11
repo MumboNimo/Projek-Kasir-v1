@@ -1,0 +1,50 @@
+import axios from "axios";
+
+// Recursively convert all object keys from snake_case to camelCase
+function toCamel(str) {
+  return str.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+}
+
+function transformKeys(value) {
+  if (Array.isArray(value)) {
+    return value.map(transformKeys);
+  }
+  if (value !== null && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([k, v]) => [toCamel(k), transformKeys(v)]),
+    );
+  }
+  return value;
+}
+
+const api = axios.create({
+  baseURL: "http://localhost:8000/api",
+  headers: { Accept: "application/json" },
+});
+
+// Attach Bearer token from localStorage on every request
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem("kasir_token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Transform snake_case → camelCase on every response
+api.interceptors.response.use(
+  (response) => {
+    response.data = transformKeys(response.data);
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("kasir_token");
+      // Redirect to login (works with history-mode router)
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  },
+);
+
+export default api;

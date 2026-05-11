@@ -1,51 +1,47 @@
 <script setup>
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 import StatCard from "../components/StatCard.vue";
 import StatusBadge from "../components/StatusBadge.vue";
 import StokBar from "../components/StokBar.vue";
 
-import { produk } from "../data/produk.js";
-import {
-  transaksi,
-  formatRupiah,
-  getTrxTerbaru,
-  getTotalPendapatan,
-} from "../data/transaksi.js";
+import { useDashboard } from "../composables/useDashboard.js";
+import { formatRupiah } from "../utils/format.js";
+
+const { stats, recentTransactions, lowStock, loading, fetchAll } = useDashboard();
+
+onMounted(fetchAll);
 
 const statistik = computed(() => [
   {
     id: 1,
     title: "Total Pendapatan",
-    value: formatRupiah(getTotalPendapatan()),
+    value: stats.value ? formatRupiah(stats.value.totalPendapatan) : "—",
     icon: "💰",
     trend: "↗ dari transaksi Lunas",
   },
   {
     id: 2,
     title: "Total Transaksi",
-    value: transaksi.length.toString(),
+    value: stats.value ? stats.value.totalTransaksi.toString() : "—",
     icon: "🧾",
     trend: "↗ data aktif",
   },
   {
     id: 3,
     title: "Produk Tersedia",
-    value: produk.length.toString(),
+    value: stats.value ? stats.value.totalProduk.toString() : "—",
     icon: "📦",
     trend: "↗ semua aktif",
   },
-  { id: 4, title: "Pelanggan", value: "5", icon: "👥", trend: "↗ terdaftar" },
+  {
+    id: 4,
+    title: "Stok Menipis",
+    value: stats.value ? stats.value.stokMenipis.toString() : "—",
+    icon: "⚠️",
+    trend: "perlu restock",
+  },
 ]);
-
-const transaksiTerbaru = computed(() => getTrxTerbaru(5));
-
-// Produk diurutkan dari yang paling menipis
-const stokMenipis = computed(() =>
-  produk
-    .filter((p) => p.stok / p.maxStok < 0.3)
-    .sort((a, b) => a.stok / a.maxStok - b.stok / b.maxStok),
-);
 </script>
 
 <template>
@@ -94,12 +90,12 @@ const stokMenipis = computed(() =>
             </thead>
             <tbody>
               <tr
-                v-for="trx in transaksiTerbaru"
+                v-for="trx in recentTransactions"
                 :key="trx.id"
                 class="border-b border-sage-100 hover:bg-sage-50 transition-colors"
               >
                 <td class="px-4 py-3 font-medium text-sage-600">
-                  {{ trx.id }}
+                  {{ trx.kode }}
                 </td>
                 <td class="px-4 py-3 text-charcoal-muted">
                   {{ trx.tanggal }} · {{ trx.jam }}
@@ -126,13 +122,13 @@ const stokMenipis = computed(() =>
           <span class="text-2xl">⚠️</span>
         </div>
         <div
-          v-if="stokMenipis.length === 0"
+          v-if="lowStock.length === 0"
           class="py-6 text-center text-sm text-charcoal-muted"
         >
           ✅ Semua stok aman!
         </div>
         <div v-else class="space-y-4">
-          <div v-for="item in stokMenipis" :key="item.id">
+          <div v-for="item in lowStock" :key="item.id">
             <p class="text-sm font-medium text-charcoal mb-1.5">
               {{ item.nama }}
             </p>
