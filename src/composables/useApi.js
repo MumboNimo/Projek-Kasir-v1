@@ -17,8 +17,9 @@ function transformKeys(value) {
   return value;
 }
 
+const base = import.meta?.env?.VITE_BASE_URL || "http://localhost:8000";
 const api = axios.create({
-  baseURL: "http://localhost:8000/api",
+  baseURL: `${base.replace(/\/$/, "")}/api`,
   headers: { Accept: "application/json" },
 });
 
