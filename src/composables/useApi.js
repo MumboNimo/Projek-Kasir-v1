@@ -2,7 +2,7 @@ import axios from "axios";
 
 // Recursively convert all object keys from snake_case to camelCase
 function toCamel(str) {
-  return str.replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+  return str.replaceAll(/_([a-z])/g, (_, c) => c.toUpperCase());
 }
 
 function transformKeys(value) {
@@ -41,7 +41,7 @@ api.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem("kasir_token");
       // Redirect to login (works with history-mode router)
-      window.location.href = "/login";
+      globalThis.location.href = "/login";
     }
     return Promise.reject(error);
   },

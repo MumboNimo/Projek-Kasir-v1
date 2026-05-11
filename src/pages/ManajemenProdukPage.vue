@@ -192,28 +192,28 @@ async function submitStockAdjust() {
 
         <form @submit.prevent="submitForm" class="space-y-3">
           <div>
-            <label class="block text-xs font-medium text-charcoal-muted mb-1">Nama</label>
-            <input v-model="form.nama" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+            <label for="prod-nama" class="block text-xs font-medium text-charcoal-muted mb-1">Nama</label>
+            <input id="prod-nama" v-model="form.nama" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
           </div>
           <div>
-            <label class="block text-xs font-medium text-charcoal-muted mb-1">Kategori</label>
-            <select v-model="form.kategori" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400">
+            <label for="prod-kategori" class="block text-xs font-medium text-charcoal-muted mb-1">Kategori</label>
+            <select id="prod-kategori" v-model="form.kategori" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400">
               <option value="" disabled>Pilih kategori</option>
               <option v-for="k in kategoriOptions" :key="k" :value="k">{{ k }}</option>
             </select>
           </div>
           <div class="grid grid-cols-3 gap-3">
             <div>
-              <label class="block text-xs font-medium text-charcoal-muted mb-1">Harga (Rp)</label>
-              <input v-model="form.harga" type="number" min="0" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+              <label for="prod-harga" class="block text-xs font-medium text-charcoal-muted mb-1">Harga (Rp)</label>
+              <input id="prod-harga" v-model="form.harga" type="number" min="0" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
             </div>
             <div>
-              <label class="block text-xs font-medium text-charcoal-muted mb-1">Stok</label>
-              <input v-model="form.stok" type="number" min="0" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+              <label for="prod-stok" class="block text-xs font-medium text-charcoal-muted mb-1">Stok</label>
+              <input id="prod-stok" v-model="form.stok" type="number" min="0" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
             </div>
             <div>
-              <label class="block text-xs font-medium text-charcoal-muted mb-1">Max Stok</label>
-              <input v-model="form.maxStok" type="number" min="1" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+              <label for="prod-maxstok" class="block text-xs font-medium text-charcoal-muted mb-1">Max Stok</label>
+              <input id="prod-maxstok" v-model="form.maxStok" type="number" min="1" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
             </div>
           </div>
 
@@ -245,10 +245,11 @@ async function submitStockAdjust() {
         <p class="text-sm text-charcoal-muted mb-4">{{ stockTarget?.nama }}</p>
         <p class="text-xs text-charcoal-muted mb-1">Stok saat ini: <strong>{{ stockTarget?.stok }}</strong></p>
         <div>
-          <label class="block text-xs font-medium text-charcoal-muted mb-1">
+          <label for="stock-adjust" class="block text-xs font-medium text-charcoal-muted mb-1">
             Jumlah perubahan (positif = tambah, negatif = kurang)
           </label>
           <input
+            id="stock-adjust"
             v-model.number="stockAdjust"
             type="number"
             class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400"

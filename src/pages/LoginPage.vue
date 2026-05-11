@@ -47,10 +47,11 @@ async function handleLogin() {
 
       <form @submit.prevent="handleLogin" class="space-y-4">
         <div>
-          <label class="block text-xs font-medium text-charcoal-muted mb-1">
+          <label for="login-email" class="block text-xs font-medium text-charcoal-muted mb-1">
             Email
           </label>
           <input
+            id="login-email"
             v-model="email"
             type="email"
             required
@@ -61,10 +62,11 @@ async function handleLogin() {
         </div>
 
         <div>
-          <label class="block text-xs font-medium text-charcoal-muted mb-1">
+          <label for="login-password" class="block text-xs font-medium text-charcoal-muted mb-1">
             Password
           </label>
           <input
+            id="login-password"
             v-model="password"
             type="password"
             required

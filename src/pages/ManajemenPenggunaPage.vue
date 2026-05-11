@@ -196,20 +196,20 @@ function formatDate(dateStr) {
 
         <form @submit.prevent="submitForm" class="space-y-3">
           <div>
-            <label class="block text-xs font-medium text-charcoal-muted mb-1">Nama</label>
-            <input v-model="form.name" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+            <label for="user-nama" class="block text-xs font-medium text-charcoal-muted mb-1">Nama</label>
+            <input id="user-nama" v-model="form.name" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
           </div>
           <div>
-            <label class="block text-xs font-medium text-charcoal-muted mb-1">Email</label>
-            <input v-model="form.email" type="email" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+            <label for="user-email" class="block text-xs font-medium text-charcoal-muted mb-1">Email</label>
+            <input id="user-email" v-model="form.email" type="email" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
           </div>
           <div v-if="!isEditing">
-            <label class="block text-xs font-medium text-charcoal-muted mb-1">Password</label>
-            <input v-model="form.password" type="password" required minlength="6" class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+            <label for="user-password" class="block text-xs font-medium text-charcoal-muted mb-1">Password</label>
+            <input id="user-password" v-model="form.password" type="password" required minlength="6" class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
           </div>
           <div>
-            <label class="block text-xs font-medium text-charcoal-muted mb-1">Role</label>
-            <select v-model="form.role" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400">
+            <label for="user-role" class="block text-xs font-medium text-charcoal-muted mb-1">Role</label>
+            <select id="user-role" v-model="form.role" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400">
               <option v-for="r in roleOptions" :key="r" :value="r">{{ r }}</option>
             </select>
           </div>
@@ -241,8 +241,9 @@ function formatDate(dateStr) {
         <h3 class="text-lg font-bold text-charcoal mb-1">Ganti Password</h3>
         <p class="text-sm text-charcoal-muted mb-4">{{ passwordTarget?.name }}</p>
         <div>
-          <label class="block text-xs font-medium text-charcoal-muted mb-1">Password Baru</label>
+          <label for="new-password" class="block text-xs font-medium text-charcoal-muted mb-1">Password Baru</label>
           <input
+            id="new-password"
             v-model="newPassword"
             type="password"
             minlength="6"
