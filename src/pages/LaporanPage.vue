@@ -3,13 +3,18 @@ import { onMounted } from "vue";
 
 import StatCard from "../components/StatCard.vue";
 import StatusBadge from "../components/StatusBadge.vue";
+import LaporanChart from "../components/LaporanChart.vue";
 
 import { useReports } from "../composables/useReports.js";
 import { useTransactions } from "../composables/useTransactions.js";
 import { formatRupiah } from "../utils/format.js";
 
 const { summary, byPayment, loading: loadingReports, fetchAll } = useReports();
-const { transactions, loading: loadingTrx, fetchTransactions } = useTransactions();
+const {
+  transactions,
+  loading: loadingTrx,
+  fetchTransactions,
+} = useTransactions();
 
 onMounted(() => {
   fetchAll();
@@ -54,6 +59,9 @@ onMounted(() => {
         trend="per transaksi lunas"
       />
     </section>
+
+    <!-- ─── Grafik ───────────────────────────────────────────── -->
+    <LaporanChart :byPayment="byPayment" :transactions="transactions" />
 
     <!-- ─── Rekap per Metode Bayar ──────────────────────────── -->
     <div
@@ -106,7 +114,12 @@ onMounted(() => {
       <div class="px-5 py-4 border-b border-sage-100">
         <h3 class="font-semibold text-charcoal">Riwayat Semua Transaksi</h3>
       </div>
-      <div v-if="loadingTrx" class="py-8 text-center text-sm text-charcoal-muted">Memuat...</div>
+      <div
+        v-if="loadingTrx"
+        class="py-8 text-center text-sm text-charcoal-muted"
+      >
+        Memuat...
+      </div>
       <div v-else class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
@@ -126,7 +139,9 @@ onMounted(() => {
               :key="trx.id"
               class="border-b border-sage-100 hover:bg-sage-50 transition-colors"
             >
-              <td class="px-4 py-3 font-medium text-sage-600">{{ trx.kode }}</td>
+              <td class="px-4 py-3 font-medium text-sage-600">
+                {{ trx.kode }}
+              </td>
               <td class="px-4 py-3 text-charcoal-muted">
                 {{ trx.tanggal }} · {{ trx.jam }}
               </td>
