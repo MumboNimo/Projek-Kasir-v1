@@ -97,46 +97,42 @@ graph TD
         Router["Vue Router\n(Route Guards)"]
         Composables["Composables\n(useAuth, useProducts,\nuseTransactions, ...)"]
         Axios["Axios Instance\n(Interceptors)"]
+        LS["localStorage\n(token, user)"]
     end
 
-    subgraph DevLayer["Development Layer"]
-        MSW["MSW\nMock Service Worker"]
-    end
-
-    subgraph Backend["Backend (REST API)"]
+    subgraph Backend["Backend Server"]
         API["REST API\n(Base URL: /api)"]
-        Auth["Auth Endpoints\n/auth/*"]
-        Products["Product Endpoints\n/products/*"]
-        Transactions["Transaction Endpoints\n/transactions/*"]
-        Reports["Report Endpoints\n/reports/*"]
-        Users["User Endpoints\n/users/*"]
-        Dashboard["Dashboard Endpoints\n/dashboard/*"]
+        Auth["Auth\n/auth/*"]
+        Dashboard["Dashboard\n/dashboard/*"]
+        Products["Products\n/products/*"]
+        Transactions["Transactions\n/transactions/*"]
+        Reports["Reports\n/reports/*"]
+        Users["Users\n/users/*"]
     end
 
     subgraph Storage["Penyimpanan"]
         DB[(Database)]
-        LS["localStorage\n(token, user)"]
     end
 
     UI --> Router
     Router --> Composables
     Composables --> Axios
-    Axios -- "VITE_MOCK_API=true" --> MSW
-    Axios -- "Production" --> API
-    MSW -.-> API
+    Axios -- "HTTP Request\n(Bearer Token)" --> API
+    Axios --> LS
+
     API --> Auth
+    API --> Dashboard
     API --> Products
     API --> Transactions
     API --> Reports
     API --> Users
-    API --> Dashboard
+
     Auth --> DB
+    Dashboard --> DB
     Products --> DB
     Transactions --> DB
     Reports --> DB
     Users --> DB
-    Dashboard --> DB
-    Axios --> LS
 ```
 
 ---
