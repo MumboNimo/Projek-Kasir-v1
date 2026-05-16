@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "../composables/useAuth.js";
+import { icons } from "../utils/icons.js";
 
 const router = useRouter();
 const { login } = useAuth();
@@ -27,17 +28,18 @@ async function handleLogin() {
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-cream-100 flex items-center justify-center p-4"
-  >
-    <div class="w-full max-w-sm bg-white rounded-2xl border border-sage-100 shadow-sm p-8">
-      <!-- Logo / Brand -->
+  <div class="min-h-screen bg-cream-100 flex items-center justify-center p-4">
+    <div
+      class="w-full max-w-sm bg-white rounded-2xl border border-sage-100 shadow-sm p-8"
+    >
       <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-sage-600">🌿 KasirKu</h1>
+        <div class="flex items-center justify-center gap-2 mb-1">
+          <img :src="icons.logo" class="w-8 h-8" alt="KasirKu" />
+          <h1 class="text-3xl font-bold text-sage-600">KasirKu</h1>
+        </div>
         <p class="text-sm text-charcoal-muted mt-1">Masuk ke akun Anda</p>
       </div>
 
-      <!-- Error alert -->
       <div
         v-if="errorMsg"
         class="mb-4 px-4 py-3 bg-red-50 border border-red-200 text-red-700 text-sm rounded-xl"
@@ -47,7 +49,10 @@ async function handleLogin() {
 
       <form @submit.prevent="handleLogin" class="space-y-4">
         <div>
-          <label for="login-email" class="block text-xs font-medium text-charcoal-muted mb-1">
+          <label
+            for="login-email"
+            class="block text-xs font-medium text-charcoal-muted mb-1"
+          >
             Email
           </label>
           <input
@@ -62,7 +67,10 @@ async function handleLogin() {
         </div>
 
         <div>
-          <label for="login-password" class="block text-xs font-medium text-charcoal-muted mb-1">
+          <label
+            for="login-password"
+            class="block text-xs font-medium text-charcoal-muted mb-1"
+          >
             Password
           </label>
           <input

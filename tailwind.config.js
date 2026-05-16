@@ -4,21 +4,23 @@ export default {
   content: ["./index.html", "./src/**/*.{vue,js}"],
   theme: {
     extend: {
-      // Warna kustom
       colors: {
         sage: {
-          50: "#f4f7f4",
-          100: "#e6ede6",
-          200: "#cdd9cd",
-          400: "#87a487",
-          600: "#557155",
+          50:  "#eef6f1",
+          100: "#cde8d8",
+          200: "#9dcfb4",
+          300: "#6db590",
+          400: "#4a9e70",
+          500: "#3a8260",
+          600: "#2b6448",
         },
         cream: {
-          100: "#faf7ef",
+          50:  "#fffdf7",
+          100: "#f0e8d8",
         },
         charcoal: {
-          DEFAULT: "#2d3436",
-          muted: "#7a8585",
+          DEFAULT: "#1c2820",
+          muted: "#5c7068",
         },
       },
       fontFamily: {

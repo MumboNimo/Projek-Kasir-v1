@@ -8,6 +8,7 @@ import LaporanChart from "../components/LaporanChart.vue";
 import { useReports } from "../composables/useReports.js";
 import { useTransactions } from "../composables/useTransactions.js";
 import { formatRupiah } from "../utils/format.js";
+import { icons } from "../utils/icons.js";
 
 const { summary, byPayment, loading: loadingReports, fetchAll } = useReports();
 const {
@@ -24,46 +25,42 @@ onMounted(() => {
 
 <template>
   <div>
-    <!-- Header halaman -->
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-charcoal">Laporan</h1>
+      <h1 class="text-xl sm:text-2xl font-bold text-charcoal">Laporan</h1>
       <p class="text-sm text-charcoal-muted mt-0.5">
         Ringkasan performa penjualan
       </p>
     </div>
 
-    <!-- ─── Kartu Statistik ─────────────────────────────────── -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       <StatCard
         title="Total Pendapatan"
         :value="summary ? formatRupiah(summary.totalPendapatan) : '—'"
-        icon="💰"
+        :icon="icons.pendapatan"
         trend="dari transaksi Lunas"
       />
       <StatCard
         title="Transaksi Lunas"
         :value="summary ? summary.jumlahLunas.toString() : '—'"
-        icon="✅"
+        :icon="icons.sukses"
         :trend="summary ? `dari ${summary.totalTransaksi} total` : ''"
       />
       <StatCard
         title="Transaksi Pending"
         :value="summary ? summary.jumlahPending.toString() : '—'"
-        icon="⏳"
+        :icon="icons.pending"
         trend="menunggu pembayaran"
       />
       <StatCard
         title="Rata-rata Nilai"
         :value="summary ? formatRupiah(summary.rataRata) : '—'"
-        icon="📈"
+        :icon="icons.tren"
         trend="per transaksi lunas"
       />
     </section>
 
-    <!-- ─── Grafik ───────────────────────────────────────────── -->
     <LaporanChart :byPayment="byPayment" :transactions="transactions" />
 
-    <!-- ─── Rekap per Metode Bayar ──────────────────────────── -->
     <div
       class="bg-white rounded-2xl border border-sage-100 shadow-sm overflow-hidden mb-6"
     >
@@ -107,7 +104,6 @@ onMounted(() => {
       </div>
     </div>
 
-    <!-- ─── Semua Transaksi ─────────────────────────────────── -->
     <div
       class="bg-white rounded-2xl border border-sage-100 shadow-sm overflow-hidden"
     >

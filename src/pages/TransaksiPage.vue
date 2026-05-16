@@ -25,7 +25,7 @@ async function toggleStatus(trx) {
   <div>
     <!-- Header halaman -->
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-charcoal">Transaksi</h1>
+      <h1 class="text-xl sm:text-2xl font-bold text-charcoal">Transaksi</h1>
       <p class="text-sm text-charcoal-muted mt-0.5">
         Semua transaksi penjualan
       </p>

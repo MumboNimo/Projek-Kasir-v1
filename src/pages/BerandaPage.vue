@@ -7,8 +7,10 @@ import StokBar from "../components/StokBar.vue";
 
 import { useDashboard } from "../composables/useDashboard.js";
 import { formatRupiah } from "../utils/format.js";
+import { icons } from "../utils/icons.js";
 
-const { stats, recentTransactions, lowStock, loading, fetchAll } = useDashboard();
+const { stats, recentTransactions, lowStock, loading, fetchAll } =
+  useDashboard();
 
 onMounted(fetchAll);
 
@@ -17,28 +19,28 @@ const statistik = computed(() => [
     id: 1,
     title: "Total Pendapatan",
     value: stats.value ? formatRupiah(stats.value.totalPendapatan) : "—",
-    icon: "💰",
+    icon: icons.pendapatan,
     trend: "↗ dari transaksi Lunas",
   },
   {
     id: 2,
     title: "Total Transaksi",
     value: stats.value ? stats.value.totalTransaksi.toString() : "—",
-    icon: "🧾",
+    icon: icons.transaksi,
     trend: "↗ data aktif",
   },
   {
     id: 3,
     title: "Produk Tersedia",
     value: stats.value ? stats.value.totalProduk.toString() : "—",
-    icon: "📦",
+    icon: icons.inventori,
     trend: "↗ semua aktif",
   },
   {
     id: 4,
     title: "Stok Menipis",
     value: stats.value ? stats.value.stokMenipis.toString() : "—",
-    icon: "⚠️",
+    icon: icons.peringatan,
     trend: "perlu restock",
   },
 ]);
@@ -46,15 +48,12 @@ const statistik = computed(() => [
 
 <template>
   <div>
-    <!-- Judul halaman -->
     <div class="mb-6">
-      <h1 class="text-2xl font-bold text-charcoal">Beranda</h1>
+      <h1 class="text-xl sm:text-2xl font-bold text-charcoal">Beranda</h1>
       <p class="text-sm text-charcoal-muted mt-0.5">
         Ringkasan aktivitas toko hari ini
       </p>
     </div>
-
-    <!-- ─── Kartu Statistik ─────────────────────────────────── -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
       <StatCard
         v-for="stat in statistik"
@@ -65,10 +64,7 @@ const statistik = computed(() => [
         :trend="stat.trend"
       />
     </section>
-
-    <!-- ─── Tabel + Widget Stok ─────────────────────────────── -->
     <section class="grid grid-cols-1 lg:grid-cols-3 gap-4">
-      <!-- Tabel transaksi terbaru (2/3 lebar di lg) -->
       <div
         class="lg:col-span-2 bg-white rounded-2xl border border-sage-100 shadow-sm overflow-hidden"
       >
@@ -109,8 +105,6 @@ const statistik = computed(() => [
           </table>
         </div>
       </div>
-
-      <!-- Widget stok menipis (1/3 lebar di lg) -->
       <div class="bg-white rounded-2xl border border-sage-100 shadow-sm p-5">
         <div class="flex items-center justify-between mb-4">
           <div>
@@ -119,13 +113,13 @@ const statistik = computed(() => [
               Perlu restock segera
             </p>
           </div>
-          <span class="text-2xl">⚠️</span>
+          <img :src="icons.peringatan" class="w-5 h-5 opacity-60" alt="" />
         </div>
         <div
           v-if="lowStock.length === 0"
           class="py-6 text-center text-sm text-charcoal-muted"
         >
-          ✅ Semua stok aman!
+          Semua stok aman!
         </div>
         <div v-else class="space-y-4">
           <div v-for="item in lowStock" :key="item.id">

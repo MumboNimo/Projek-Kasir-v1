@@ -5,12 +5,18 @@ import { useProducts } from "../composables/useProducts.js";
 import { formatRupiah } from "../utils/format.js";
 import { tampilNotif } from "../composables/useNotif.js";
 
-const { products, loading, fetchProducts, createProduct, updateProduct, deleteProduct, adjustStock } =
-  useProducts();
+const {
+  products,
+  loading,
+  fetchProducts,
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  adjustStock,
+} = useProducts();
 
 onMounted(fetchProducts);
 
-// ─── Modal state ─────────────────────────────────────────────
 const showModal = ref(false);
 const showStockModal = ref(false);
 const isEditing = ref(false);
@@ -29,7 +35,13 @@ const editId = ref(null);
 const stockTarget = ref(null);
 const stockAdjust = ref(0);
 
-const kategoriOptions = ["Minuman", "Makanan", "Sembako", "Kebersihan", "Lainnya"];
+const kategoriOptions = [
+  "Minuman",
+  "Makanan",
+  "Sembako",
+  "Kebersihan",
+  "Lainnya",
+];
 
 function openCreate() {
   isEditing.value = false;
@@ -112,28 +124,37 @@ async function submitStockAdjust() {
 
 <template>
   <div>
-    <!-- Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
       <div>
-        <h1 class="text-2xl font-bold text-charcoal">Manajemen Produk</h1>
-        <p class="text-sm text-charcoal-muted mt-0.5">{{ products.length }} produk terdaftar</p>
+        <h1 class="text-xl sm:text-2xl font-bold text-charcoal">
+          Manajemen Produk
+        </h1>
+        <p class="text-sm text-charcoal-muted mt-0.5">
+          {{ products.length }} produk terdaftar
+        </p>
       </div>
       <button
         @click="openCreate"
-        class="px-4 py-2 bg-sage-400 text-white rounded-xl text-sm font-semibold hover:bg-sage-500 transition-colors"
+        class="px-4 py-2 bg-sage-400 text-white rounded-xl text-sm font-semibold hover:bg-sage-500 transition-colors shrink-0"
       >
         + Tambah Produk
       </button>
     </div>
 
-    <div v-if="loading" class="text-center py-12 text-charcoal-muted text-sm">Memuat...</div>
+    <div v-if="loading" class="text-center py-12 text-charcoal-muted text-sm">
+      Memuat...
+    </div>
 
-    <!-- Tabel -->
-    <div v-else class="bg-white rounded-2xl border border-sage-100 shadow-sm overflow-hidden">
+    <div
+      v-else
+      class="bg-white rounded-2xl border border-sage-100 shadow-sm overflow-hidden"
+    >
       <div class="overflow-x-auto">
         <table class="w-full text-sm">
           <thead>
-            <tr class="bg-sage-50 text-xs font-semibold uppercase text-charcoal-muted">
+            <tr
+              class="bg-sage-50 text-xs font-semibold uppercase text-charcoal-muted"
+            >
               <th class="px-4 py-3 text-left">Kode</th>
               <th class="px-4 py-3 text-left">Nama</th>
               <th class="px-4 py-3 text-left">Kategori</th>
@@ -151,27 +172,42 @@ async function submitStockAdjust() {
               <td class="px-4 py-3 font-medium text-sage-600">{{ p.kode }}</td>
               <td class="px-4 py-3 font-medium text-charcoal">{{ p.nama }}</td>
               <td class="px-4 py-3 text-charcoal-muted">{{ p.kategori }}</td>
-              <td class="px-4 py-3 font-semibold text-charcoal">{{ formatRupiah(p.harga) }}</td>
-              <td class="px-4 py-3 text-charcoal-muted">{{ p.stok }} / {{ p.maxStok }}</td>
+              <td class="px-4 py-3 font-semibold text-charcoal">
+                {{ formatRupiah(p.harga) }}
+              </td>
+              <td class="px-4 py-3 text-charcoal-muted">
+                {{ p.stok }} / {{ p.maxStok }}
+              </td>
               <td class="px-4 py-3">
                 <div class="flex gap-2">
                   <button
                     @click="openStockModal(p)"
                     class="text-xs px-2.5 py-1 rounded-lg border border-sage-100 text-charcoal-muted hover:bg-sage-50 transition-colors"
-                  >Stok</button>
+                  >
+                    Stok
+                  </button>
                   <button
                     @click="openEdit(p)"
                     class="text-xs px-2.5 py-1 rounded-lg border border-sage-100 text-charcoal-muted hover:bg-sage-50 transition-colors"
-                  >Edit</button>
+                  >
+                    Edit
+                  </button>
                   <button
                     @click="confirmDelete(p)"
                     class="text-xs px-2.5 py-1 rounded-lg border border-red-100 text-red-500 hover:bg-red-50 transition-colors"
-                  >Hapus</button>
+                  >
+                    Hapus
+                  </button>
                 </div>
               </td>
             </tr>
             <tr v-if="products.length === 0">
-              <td colspan="6" class="px-4 py-8 text-center text-charcoal-muted text-sm">Belum ada produk.</td>
+              <td
+                colspan="6"
+                class="px-4 py-8 text-center text-charcoal-muted text-sm"
+              >
+                Belum ada produk.
+              </td>
             </tr>
           </tbody>
         </table>
@@ -179,7 +215,6 @@ async function submitStockAdjust() {
     </div>
   </div>
 
-  <!-- ─── Modal Tambah/Edit Produk ─────────────────────────── -->
   <Transition name="toast">
     <div
       v-if="showModal"
@@ -192,28 +227,81 @@ async function submitStockAdjust() {
 
         <form @submit.prevent="submitForm" class="space-y-3">
           <div>
-            <label for="prod-nama" class="block text-xs font-medium text-charcoal-muted mb-1">Nama</label>
-            <input id="prod-nama" v-model="form.nama" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+            <label
+              for="prod-nama"
+              class="block text-xs font-medium text-charcoal-muted mb-1"
+              >Nama</label
+            >
+            <input
+              id="prod-nama"
+              v-model="form.nama"
+              required
+              class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400"
+            />
           </div>
           <div>
-            <label for="prod-kategori" class="block text-xs font-medium text-charcoal-muted mb-1">Kategori</label>
-            <select id="prod-kategori" v-model="form.kategori" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400">
+            <label
+              for="prod-kategori"
+              class="block text-xs font-medium text-charcoal-muted mb-1"
+              >Kategori</label
+            >
+            <select
+              id="prod-kategori"
+              v-model="form.kategori"
+              required
+              class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400"
+            >
               <option value="" disabled>Pilih kategori</option>
-              <option v-for="k in kategoriOptions" :key="k" :value="k">{{ k }}</option>
+              <option v-for="k in kategoriOptions" :key="k" :value="k">
+                {{ k }}
+              </option>
             </select>
           </div>
           <div class="grid grid-cols-3 gap-3">
             <div>
-              <label for="prod-harga" class="block text-xs font-medium text-charcoal-muted mb-1">Harga (Rp)</label>
-              <input id="prod-harga" v-model="form.harga" type="number" min="0" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+              <label
+                for="prod-harga"
+                class="block text-xs font-medium text-charcoal-muted mb-1"
+                >Harga (Rp)</label
+              >
+              <input
+                id="prod-harga"
+                v-model="form.harga"
+                type="number"
+                min="0"
+                required
+                class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400"
+              />
             </div>
             <div>
-              <label for="prod-stok" class="block text-xs font-medium text-charcoal-muted mb-1">Stok</label>
-              <input id="prod-stok" v-model="form.stok" type="number" min="0" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+              <label
+                for="prod-stok"
+                class="block text-xs font-medium text-charcoal-muted mb-1"
+                >Stok</label
+              >
+              <input
+                id="prod-stok"
+                v-model="form.stok"
+                type="number"
+                min="0"
+                required
+                class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400"
+              />
             </div>
             <div>
-              <label for="prod-maxstok" class="block text-xs font-medium text-charcoal-muted mb-1">Max Stok</label>
-              <input id="prod-maxstok" v-model="form.maxStok" type="number" min="1" required class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400" />
+              <label
+                for="prod-maxstok"
+                class="block text-xs font-medium text-charcoal-muted mb-1"
+                >Max Stok</label
+              >
+              <input
+                id="prod-maxstok"
+                v-model="form.maxStok"
+                type="number"
+                min="1"
+                required
+                class="w-full px-3 py-2 rounded-xl border border-sage-100 text-sm focus:outline-none focus:ring-2 focus:ring-sage-400"
+              />
             </div>
           </div>
 
@@ -222,19 +310,22 @@ async function submitStockAdjust() {
               type="button"
               @click="showModal = false"
               class="flex-1 py-2 rounded-xl border border-sage-100 text-sm font-medium text-charcoal-muted hover:bg-sage-50 transition-colors"
-            >Batal</button>
+            >
+              Batal
+            </button>
             <button
               type="submit"
               :disabled="modalLoading"
               class="flex-1 py-2 rounded-xl bg-sage-400 text-white text-sm font-semibold hover:bg-sage-500 transition-colors disabled:opacity-60"
-            >{{ modalLoading ? "Menyimpan..." : "Simpan" }}</button>
+            >
+              {{ modalLoading ? "Menyimpan..." : "Simpan" }}
+            </button>
           </div>
         </form>
       </div>
     </div>
   </Transition>
 
-  <!-- ─── Modal Sesuaikan Stok ──────────────────────────────── -->
   <Transition name="toast">
     <div
       v-if="showStockModal"
@@ -243,9 +334,14 @@ async function submitStockAdjust() {
       <div class="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-xs">
         <h3 class="text-lg font-bold text-charcoal mb-1">Sesuaikan Stok</h3>
         <p class="text-sm text-charcoal-muted mb-4">{{ stockTarget?.nama }}</p>
-        <p class="text-xs text-charcoal-muted mb-1">Stok saat ini: <strong>{{ stockTarget?.stok }}</strong></p>
+        <p class="text-xs text-charcoal-muted mb-1">
+          Stok saat ini: <strong>{{ stockTarget?.stok }}</strong>
+        </p>
         <div>
-          <label for="stock-adjust" class="block text-xs font-medium text-charcoal-muted mb-1">
+          <label
+            for="stock-adjust"
+            class="block text-xs font-medium text-charcoal-muted mb-1"
+          >
             Jumlah perubahan (positif = tambah, negatif = kurang)
           </label>
           <input
@@ -259,12 +355,16 @@ async function submitStockAdjust() {
           <button
             @click="showStockModal = false"
             class="flex-1 py-2 rounded-xl border border-sage-100 text-sm font-medium text-charcoal-muted hover:bg-sage-50 transition-colors"
-          >Batal</button>
+          >
+            Batal
+          </button>
           <button
             @click="submitStockAdjust"
             :disabled="modalLoading || stockAdjust === 0"
             class="flex-1 py-2 rounded-xl bg-sage-400 text-white text-sm font-semibold hover:bg-sage-500 transition-colors disabled:opacity-60"
-          >{{ modalLoading ? "Menyimpan..." : "Simpan" }}</button>
+          >
+            {{ modalLoading ? "Menyimpan..." : "Simpan" }}
+          </button>
         </div>
       </div>
     </div>
