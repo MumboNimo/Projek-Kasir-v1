@@ -39,7 +39,8 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error.response?.status === 401) {
+    const isLoginRequest = error.config?.url?.includes("/auth/login");
+    if (error.response?.status === 401 && !isLoginRequest) {
       localStorage.removeItem("kasir_token");
       // Redirect to login (works with history-mode router)
       globalThis.location.href = "/login";

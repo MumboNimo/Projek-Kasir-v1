@@ -46,8 +46,8 @@ async function handleLogout() {
   >
     <!-- Logo -->
     <div class="px-5 py-5 border-b border-sage-100 flex items-center justify-between bg-white/60">
-      <div class="flex items-center gap-2">
-        <img :src="icons.logo" class="w-6 h-6" alt="KasirKu" />
+      <div class="flex items-start gap-2">
+        <img :src="icons.logo" class="w-[38px] h-[38px]" alt="KasirKu" />
         <div>
           <h1 class="text-xl font-bold text-sage-600 leading-none">KasirKu</h1>
           <p class="text-xs text-charcoal-muted mt-0.5">Dashboard UMKM · v1</p>

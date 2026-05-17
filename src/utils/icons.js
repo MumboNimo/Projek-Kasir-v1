@@ -1,19 +1,22 @@
-import beranda   from '../assets/img/beranda.svg'
-import kasir     from '../assets/img/kasir.svg'
-import transaksi from '../assets/img/transaksi.svg'
-import inventori from '../assets/img/inventori.svg'
-import laporan   from '../assets/img/laporan.svg'
-import produk    from '../assets/img/produk.svg'
-import pengguna  from '../assets/img/pengguna.svg'
-import keluar    from '../assets/img/keluar.svg'
-import logo      from '../assets/img/logo.svg'
+import beranda    from '../assets/img/beranda.svg'
+import kasir      from '../assets/img/kasir.svg'
+import transaksi  from '../assets/img/transaksi.svg'
+import inventori  from '../assets/img/inventori.svg'
+import laporan    from '../assets/img/laporan.svg'
+import produk     from '../assets/img/produk.svg'
+import pengguna   from '../assets/img/pengguna.svg'
+import keluar     from '../assets/img/keluar.svg'
+import logo       from '../assets/img/logo.svg'
 import pendapatan from '../assets/img/pendapatan.svg'
 import peringatan from '../assets/img/peringatan.svg'
-import sukses    from '../assets/img/sukses.svg'
-import pending   from '../assets/img/pending.svg'
-import tren      from '../assets/img/tren.svg'
-import tutup     from '../assets/img/tutup.svg'
-import menu      from '../assets/img/menu.svg'
+import sukses     from '../assets/img/sukses.svg'
+import pending    from '../assets/img/pending.svg'
+import tren       from '../assets/img/tren.svg'
+import tutup      from '../assets/img/tutup.svg'
+import menu       from '../assets/img/menu.svg'
+import transaction from '../assets/img/transaction.svg'
+import box        from '../assets/img/box.svg'
+import warning    from '../assets/img/warning.svg'
 
 export const icons = {
   beranda,
@@ -32,4 +35,7 @@ export const icons = {
   tren,
   tutup,
   menu,
+  transaction,
+  box,
+  warning,
 }

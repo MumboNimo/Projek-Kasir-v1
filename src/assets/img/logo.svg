@@ -1,5 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#5B8C6A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M12 22V12"/>
-  <path d="M12 12C12 8 9 5 5 4c0 4 2 8 7 8z"/>
-  <path d="M12 12c0-4 3-7 7-8c0 4-2 8-7 8z"/>
+<svg width="100%" viewBox="170 170 340 340" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Logo Profesional Sage</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Logo minimalis daun dengan warna sage gelap, tanpa elemen koin</desc>
+
+  <g transform="translate(340, 340)" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+
+    <!-- Rounded square badge -->
+    <rect x="-160" y="-160" width="320" height="320" rx="72" fill="#4a6741" style="fill:rgb(74, 103, 65);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Left large leaf -->
+    <path d="M -8 55&#10;             C -28 15, -85 -25, -92 -95&#10;             C -55 -78, -18 -45, -2 -5&#10;             Z" fill="#7a9e6e" style="fill:rgb(122, 158, 110);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Left vein -->
+    <path d="M -8 55 C -52 -15, -76 -62, -92 -95" fill="none" stroke="#4a6741" stroke-width="1.8" stroke-linecap="round" opacity="0.5" style="fill:none;stroke:rgb(74, 103, 65);color:rgb(255, 255, 255);stroke-width:1.8px;stroke-linecap:round;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Right large leaf -->
+    <path d="M 8 55&#10;             C 28 15, 85 -25, 92 -95&#10;             C 55 -78, 18 -45, 2 -5&#10;             Z" fill="#7a9e6e" style="fill:rgb(122, 158, 110);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Right vein -->
+    <path d="M 8 55 C 52 -15, 76 -62, 92 -95" fill="none" stroke="#4a6741" stroke-width="1.8" stroke-linecap="round" opacity="0.5" style="fill:none;stroke:rgb(74, 103, 65);color:rgb(255, 255, 255);stroke-width:1.8px;stroke-linecap:round;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Small left leaf -->
+    <path d="M -4 -18&#10;             C -22 -42, -50 -58, -58 -100&#10;             C -30 -88, -8 -58, -2 -22&#10;             Z" fill="#a3bc8e" style="fill:rgb(163, 188, 142);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Small right leaf -->
+    <path d="M 4 -18&#10;             C 22 -42, 50 -58, 58 -100&#10;             C 30 -88, 8 -58, 2 -22&#10;             Z" fill="#a3bc8e" style="fill:rgb(163, 188, 142);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Top bud -->
+    <ellipse cx="0" cy="-112" rx="7" ry="11" fill="#c2d4b0" style="fill:rgb(194, 212, 176);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Central stem -->
+    <path d="M 0 80 C 0 40, 0 0, 0 -110" fill="none" stroke="#2d4a2a" stroke-width="2.8" stroke-linecap="round" style="fill:none;stroke:rgb(45, 74, 42);color:rgb(255, 255, 255);stroke-width:2.8px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+    <!-- Flat base / ground -->
+    <rect x="-70" y="80" width="140" height="10" rx="5" fill="#2d4a2a" opacity="0.5" style="fill:rgb(45, 74, 42);stroke:none;color:rgb(255, 255, 255);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.5;font-family:&quot;Anthropic Sans&quot;, -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  </g>
 </svg>
