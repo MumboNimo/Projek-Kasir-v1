@@ -1,6 +1,7 @@
 import { ref, computed } from "vue";
 import api from "./useApi.js";
 
+// Disimpan di luar fungsi agar semua komponen berbagi satu instance user yang sama
 const user = ref(null);
 
 export function useAuth() {

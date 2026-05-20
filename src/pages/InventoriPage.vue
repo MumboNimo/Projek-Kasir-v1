@@ -19,7 +19,7 @@ const filterAktif = ref("semua");
 
 function statusStok(stok) {
   if (stok === 0) return "habis";
-  if (stok <= 5) return "menipis";
+  if (stok <= 5) return "menipis"; // Threshold 5 sesuai aturan bisnis — ubah di sini jika perlu disesuaikan
   return "tersedia";
 }
 

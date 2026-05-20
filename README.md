@@ -63,6 +63,8 @@ Banyak UMKM di Indonesia masih mengelola transaksi dan stok secara manual (buku 
 - Lihat riwayat transaksi dengan filter status
 - Monitor stok produk secara real-time
 - Lihat laporan penjualan & grafik performa
+- Filter riwayat transaksi berdasarkan periode (harian, mingguan, bulanan)
+- Ekspor riwayat transaksi ke CSV (harian, mingguan, bulanan)
 
 ### Admin
 
@@ -371,6 +373,9 @@ kasirku.v1/
 │   │   └── ManajemenPenggunaPage.vue
 │   ├── router/              # Konfigurasi Vue Router + route guards
 │   ├── utils/               # Helper & konstanta
+│   │   ├── exportCsv.js     # Export transaksi ke CSV (harian/mingguan/bulanan)
+│   │   ├── format.js        # Format rupiah & utilitas lain
+│   │   └── icons.js         # Kumpulan ikon SVG
 │   ├── App.vue
 │   ├── main.js
 │   └── style.css
@@ -423,7 +428,7 @@ npm run preview   # Preview hasil build
 
 | Fitur                      | Prioritas | Deskripsi                                           |
 | -------------------------- | --------- | --------------------------------------------------- |
-| Ekspor Laporan (PDF/Excel) | Tinggi    | Download laporan penjualan dalam format dokumen     |
+| Ekspor Laporan (PDF/Excel) | Sedang    | Download laporan penjualan dalam format PDF / Excel (CSV sudah tersedia) |
 | Manajemen Kategori Produk  | Sedang    | CRUD kategori produk yang dinamis                   |
 | Diskon & Promo             | Sedang    | Fitur potongan harga per produk atau transaksi      |
 | Multi-Outlet               | Rendah    | Dukungan beberapa cabang dalam satu akun            |

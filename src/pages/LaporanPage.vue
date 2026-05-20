@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted } from "vue";
+import { onMounted, ref, computed } from "vue";
 
 import StatCard from "../components/StatCard.vue";
 import StatusBadge from "../components/StatusBadge.vue";
@@ -9,6 +9,7 @@ import { useReports } from "../composables/useReports.js";
 import { useTransactions } from "../composables/useTransactions.js";
 import { formatRupiah } from "../utils/format.js";
 import { icons } from "../utils/icons.js";
+import { exportHarian, exportMingguan, exportBulanan } from "../utils/exportCsv.js";
 
 const { summary, byPayment, loading: loadingReports, fetchAll } = useReports();
 const {
@@ -16,6 +17,44 @@ const {
   loading: loadingTrx,
   fetchTransactions,
 } = useTransactions();
+
+const activePeriod = ref("semua");
+
+const periodOptions = [
+  { key: "semua", label: "Semua" },
+  { key: "bulanan", label: "Bulanan" },
+  { key: "mingguan", label: "Mingguan" },
+  { key: "harian", label: "Harian" },
+];
+
+const filteredTransactions = computed(() => {
+  const today = new Date().toISOString().slice(0, 10);
+  const currentMonth = today.slice(0, 7);
+
+  if (activePeriod.value === "harian") {
+    return transactions.value.filter((trx) => trx.tanggal === today);
+  }
+  if (activePeriod.value === "mingguan") {
+    const now = new Date();
+    const day = now.getDay();
+    const diffToMonday = day === 0 ? -6 : 1 - day;
+    const monday = new Date(now);
+    monday.setDate(now.getDate() + diffToMonday);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    const start = monday.toISOString().slice(0, 10);
+    const end = sunday.toISOString().slice(0, 10);
+    return transactions.value.filter(
+      (trx) => trx.tanggal >= start && trx.tanggal <= end
+    );
+  }
+  if (activePeriod.value === "bulanan") {
+    return transactions.value.filter((trx) =>
+      trx.tanggal.startsWith(currentMonth)
+    );
+  }
+  return transactions.value;
+});
 
 onMounted(() => {
   fetchAll();
@@ -107,14 +146,66 @@ onMounted(() => {
     <div
       class="bg-white rounded-2xl border border-sage-100 shadow-sm overflow-hidden"
     >
-      <div class="px-5 py-4 border-b border-sage-100">
-        <h3 class="font-semibold text-charcoal">Riwayat Semua Transaksi</h3>
+      <div
+        class="px-5 py-4 border-b border-sage-100 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
+      >
+        <h3 class="font-semibold text-charcoal">Riwayat Transaksi</h3>
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- Filter periode -->
+          <div class="flex items-center gap-1 bg-sage-50 p-1 rounded-xl">
+            <button
+              v-for="opt in periodOptions"
+              :key="opt.key"
+              @click="activePeriod = opt.key"
+              :class="[
+                'px-3 py-1.5 text-xs font-medium rounded-lg transition-all',
+                activePeriod === opt.key
+                  ? 'bg-white text-sage-700 shadow-sm font-semibold'
+                  : 'text-charcoal-muted hover:text-charcoal',
+              ]"
+            >
+              {{ opt.label }}
+            </button>
+          </div>
+
+          <!-- Tombol export -->
+          <button
+            @click="exportHarian(transactions)"
+            class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-sage-200 text-sage-700 hover:bg-sage-50 transition-all"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export Harian
+          </button>
+          <button
+            @click="exportMingguan(transactions)"
+            class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-sage-200 text-sage-700 hover:bg-sage-50 transition-all"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export Mingguan
+          </button>
+          <button
+            @click="exportBulanan(transactions)"
+            class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-sage-200 text-sage-700 hover:bg-sage-50 transition-all"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Export Bulanan
+          </button>
+        </div>
       </div>
       <div
         v-if="loadingTrx"
         class="py-8 text-center text-sm text-charcoal-muted"
       >
         Memuat...
+      </div>
+      <div v-else-if="filteredTransactions.length === 0" class="py-10 text-center text-sm text-charcoal-muted">
+        Tidak ada transaksi untuk periode ini.
       </div>
       <div v-else class="overflow-x-auto">
         <table class="w-full text-sm">
@@ -131,7 +222,7 @@ onMounted(() => {
           </thead>
           <tbody>
             <tr
-              v-for="trx in transactions"
+              v-for="trx in filteredTransactions"
               :key="trx.id"
               class="border-b border-sage-100 hover:bg-sage-50 transition-colors"
             >

@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import api from "./useApi.js";
 
+// State di module-level — sengaja dijadikan singleton agar semua halaman berbagi data yang sama tanpa fetch ulang
 const users = ref([]);
 const loading = ref(false);
 const error = ref(null);
