@@ -32,10 +32,12 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Transform snake_case → camelCase on every response
+// Transform snake_case → camelCase on every response (skip binary/blob responses)
 api.interceptors.response.use(
   (response) => {
-    response.data = transformKeys(response.data);
+    if (response.config.responseType !== "blob") {
+      response.data = transformKeys(response.data);
+    }
     return response;
   },
   (error) => {
